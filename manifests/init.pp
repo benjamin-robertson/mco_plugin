@@ -26,7 +26,7 @@ class mco_plugin (
       mode   => '0644',
       owner  => 'root',
       group  => 'root',
-      source => "puppet:///modules/profile/${files}",
+      source => "puppet:///modules/mco_plugin/${files}",
       notify => Service['mcollective'],
     }
   }
