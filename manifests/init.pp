@@ -5,16 +5,18 @@
 # @example
 #   include mco_plugin
 class mco_plugin (
-  String $mco_location = "/opt/puppetlabs/mcollective/plugins/mcollective/agent/",
-  Variant[Array, Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/]] $mco_files = ['shell.rb','shell.ddl','shell/job.rb'],
-  #Variant[Array, Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/]] $mco_application = undef,
+  String $mco_location = '/opt/puppetlabs/mcollective/plugins/mcollective/',
+  Variant[Array, Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/, /^\w*\/\w*\/\w*\.\w*$/]] $mco_files = ['agent/shell.rb','agent/shell.ddl','agent/shell/job.rb', 'application/shell.rb'],
   ) {
   # check to see if direcotry need to be created.
   $mco_files.each | String $files| {
     if $files =~ /^\w*\/\w*\.\w*$/ {
       $folder_to_create = split($files, '/')
-      file {"${mco_location}${folder_to_create[0]}":
-        ensure => directory,
+      # First directory will already exists, create any sub directories.
+      if $folder_to_create.lenght >= 2 {
+        file {"${mco_location}${folder_to_create[1]}":
+          ensure => directory,
+        }
       }
     }
   }
