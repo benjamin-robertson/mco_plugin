@@ -13,8 +13,6 @@ class mco_plugin (
   # check to see if directory need to be created.
   $mco_directories.each | String $folders| {
     $folder_to_create = split($folders, '/')
-    notify {"${folder_to_create.length}":}
-    notify {"${mco_location}${folder_to_create[0]}/${folder_to_create[1]}":}
     if $folder_to_create.length == 2 {
       file {"${mco_location}${folder_to_create[0]}/${folder_to_create[1]}":
         ensure => directory,
