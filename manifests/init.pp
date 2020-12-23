@@ -7,18 +7,15 @@
 class mco_plugin (
   String $mco_location = '/opt/puppetlabs/mcollective/plugins/mcollective/',
   Variant[Array, Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/, /^\w*\/\w*\/\w*\.\w*$/]] $mco_files = ['agent/shell.rb','agent/shell.ddl','agent/shell/job.rb', 'application/shell.rb', 'agent/shell/test.rb'],
+  # directories to create with existing mco structure
+  Variant[Array, Pattern[/^\w*\/\w*$/]] $mco_directories = ['agent/shell'],
   ) {
   # check to see if directory need to be created.
-  $folders = []
-
-  $mco_files.each | String $files| {
-    if $files =~ /^\w*\/\w*\/\w*\.\w*$/ {
-      $folder_to_create = split($files, '/')
-      # First directory will already exists, create any sub directories.
-      if $folder_to_create.length >= 2 {
-        file {"${mco_location}${folder_to_create[0]}/${folder_to_create[1]}":
-          ensure => directory,
-        }
+  $mco_directories.each | String $folders| {
+    $folder_to_create = split($folders, '/')
+    if $folder_to_create.length == 1 {
+      file {"${mco_location}${folder_to_create[0]}/${folder_to_create[1]}":
+        ensure => directory,
       }
     }
   }
