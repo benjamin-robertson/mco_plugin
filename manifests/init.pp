@@ -6,9 +6,9 @@
 #   include mco_plugin
 class mco_plugin (
   String $mco_location = '/opt/puppetlabs/mcollective/plugins/mcollective/',
-  Variant[Array, Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/, /^\w*\/\w*\/\w*\.\w*$/]] $mco_files = ['agent/shell.rb','agent/shell.ddl','agent/shell/job.rb', 'application/shell.rb', 'agent/shell/test.rb'],
+  Variant[Array[Pattern[/^\w*\.\w*$/, /^\w*\/\w*\.\w*$/, /^\w*\/\w*\/\w*\.\w*$/]]] $mco_files = ['agent/shell.rb','agent/shell.ddl','agent/shell/job.rb', 'application/shell.rb', 'agent/shell/test.rb'],
   # directories to create with existing mco structure
-  Variant[Array, Pattern[/^\w*\/\w*$/]] $mco_directories = ['agent/shell'],
+  Variant[Array[Pattern[/^\w*\/\w*$/]]] $mco_directories = ['agent/shell'],
   ) {
   # check to see if directory need to be created.
   $mco_directories.each | String $folders| {
