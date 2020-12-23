@@ -16,7 +16,7 @@ class mco_plugin (
       $folder_to_create = split($files, '/')
       # First directory will already exists, create any sub directories.
       if $folder_to_create.length >= 2 {
-        file {"${mco_location}${folder_to_create[1]}":
+        file {"${mco_location}${folder_to_create[0]}/${folder_to_create[1]}":
           ensure => directory,
         }
       }
